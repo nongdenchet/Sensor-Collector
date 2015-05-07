@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:key="key_configure"
+        android:title="Sensor properties">
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="@string/key_gravity"
+            android:summary="@string/summary_gravity"
+            android:title="@string/title_gravity" />
+
+        <EditTextPreference
+            android:defaultValue="320"
+            android:inputType="number"
+            android:key="@string/key_delta"
+            android:summary="@string/summary_delta"
+            android:title="@string/title_delta" />
+
+        <EditTextPreference
+            android:defaultValue="100"
+            android:inputType="number"
+            android:key="@string/key_record"
+            android:summary="@string/summary_record"
+            android:title="@string/title_record" />
+
+        <EditTextPreference
+            android:defaultValue="16"
+            android:inputType="number"
+            android:key="@string/key_data"
+            android:summary="@string/summary_data"
+            android:title="@string/title_data" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

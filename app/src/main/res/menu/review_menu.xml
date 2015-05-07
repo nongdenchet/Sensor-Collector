@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/sortMenuItem"
+        android:title="Sort"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/none"
+                android:title="@string/none"/>
+            <item
+                android:id="@+id/walkMenuItem"
+                android:title="@string/walk" />
+            <item
+                android:id="@+id/bikeMenuItem"
+                android:title="@string/bike" />
+            <item
+                android:id="@+id/carMenuItem"
+                android:title="@string/car" />
+            <item
+                android:id="@+id/busMenuItem"
+                android:title="@string/bus" />
+            <item
+                android:id="@+id/motorMenuItem"
+                android:title="@string/motor_bike" />
+        </menu>
+    </item>
+</menu>

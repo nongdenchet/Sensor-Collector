@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">Sensor Collector</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_item_1">Android</string>
+    <string name="title_item_2">iOS</string>
+    <string name="title_item_3">Windows Phone</string>
+    <string name="all_data">All data</string>
+    <string name="graph_analyzer">Graph Analyzer</string>
+    <string name="start_background_job_label">Start Background Job</string>
+    <string name="cancel">Cancel</string>
+    <string name="stop">Stop</string>
+    <string name="start">Start</string>
+    <string name="walk">Walk</string>
+    <string name="bike">Bike</string>
+    <string name="car">Car</string>
+    <string name="motor_bike">Motorbike</string>
+    <string name="bus">Bus</string>
+    <string name="none">None</string>
+    <string name="nothing">Nothing to display</string>
+    <string name="delete">Delete</string>
+    <string name="summary_delta">This specifies the time (in milisecond) that the device sensor will notify and collect the data for the application</string>
+    <string name="key_delta">key_delta</string>
+    <string name="title_delta">Time between two update</string>
+    <string name="key_data">key_data</string>
+    <string name="summary_data">The number of the data set that the application service will try to collect before shutting down the application process</string>
+    <string name="key_record">key_record</string>
+    <string name="summary_record">This is the number of record in each data set</string>
+    <string name="title_record">Number of record</string>
+    <string name="title_data">Number of data set</string>
+    <string name="start_recording">Start recording</string>
+    <string name="view_data">View data</string>
+    <string name="setting">Setting</string>
+    <string name="key_gravity">key_gravity</string>
+    <string name="summary_gravity">Check this to eliminate gravity when sensor collecting the data</string>
+    <string name="title_gravity">Eliminate gravity</string>
+    <array name="tranport_items">
+        <item>Walk</item>
+        <item>Bike</item>
+        <item>Car</item>
+        <item>Bus</item>
+        <item>Motorbike</item>
+    </array>
+</resources>

@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action"
+        android:title="@string/start_recording"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_view"
+        android:title="@string/view_data"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/settings"
+        android:showAsAction="never"
+        android:title="@string/setting" />
+</menu>
