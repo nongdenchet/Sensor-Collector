@@ -17,6 +17,7 @@ import com.event.review.collect_data_sensor.application.SensorApp;
 import com.event.review.collect_data_sensor.model.SensorCollection;
 import com.event.review.collect_data_sensor.module.ListModule;
 import com.event.review.collect_data_sensor.presenter.ListSensorDataPresenter;
+import com.squareup.leakcanary.RefWatcher;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -197,5 +198,10 @@ public class ListSensorDataFragment extends BaseFragment implements ListSensorDa
     public void startLoadData() {
         progressDialog.setMessage("Reading data...");
         progressDialog.show();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

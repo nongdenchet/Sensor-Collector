@@ -40,7 +40,7 @@ public class CollectDataSensorFragment extends BaseFragment
     @Inject CollectDataSensorPresenter mPresenter;
     @InjectView(R.id.chart) LineChart mChart;
 
-    private CollectDataSensorFragment() {}
+    public CollectDataSensorFragment() {}
 
     public static CollectDataSensorFragment createWithDesAndCollection
             (int layout, SensorCollection collection, String des) {
@@ -201,5 +201,10 @@ public class CollectDataSensorFragment extends BaseFragment
     @Override
     public void onChartUpdate() {
         mChart.invalidate();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

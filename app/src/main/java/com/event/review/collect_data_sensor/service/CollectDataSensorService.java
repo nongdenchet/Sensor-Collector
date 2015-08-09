@@ -1,5 +1,7 @@
 package com.event.review.collect_data_sensor.service;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -7,14 +9,16 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
 
 import com.event.review.R;
+import com.event.review.collect_data_sensor.activity.CollectDataSensorActivity;
 import com.event.review.collect_data_sensor.application.SensorApp;
-import com.event.review.collect_data_sensor.model.SensorData;
 import com.event.review.collect_data_sensor.model.SensorCollection;
+import com.event.review.collect_data_sensor.model.SensorData;
 import com.event.review.collect_data_sensor.util.Constant;
 import com.event.review.collect_data_sensor.util.DateUtils;
 import com.event.review.collect_data_sensor.util.PhysicalUtils;
@@ -23,6 +27,7 @@ import com.squareup.otto.Bus;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,8 +62,10 @@ public class CollectDataSensorService extends Service implements SensorEventList
     private PowerManager pm;
     private PowerManager.WakeLock wakeLock;
 
-    @Inject Bus mEventBus;
-    @Inject PrefUtils prefUtils;
+    @Inject
+    Bus mEventBus;
+    @Inject
+    PrefUtils prefUtils;
 
     @Override
     public void onCreate() {
@@ -99,7 +106,24 @@ public class CollectDataSensorService extends Service implements SensorEventList
     public int onStartCommand(Intent intent, int flags, int startId) {
         type = intent.getStringExtra("type");
         startRecording();
+        startForeground(startId, getNotification());
         return Service.START_NOT_STICKY;
+    }
+
+    private Notification getNotification() {
+        Intent i = new Intent(this, CollectDataSensorActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent pendIntent = PendingIntent.getActivity(this, 0, i, 0);
+        Notification.Builder builder = new Notification.Builder(getApplicationContext())
+                .setContentTitle("Collecting Data")
+                .setContentText("Click here to show the collecting process")
+                .setContentIntent(pendIntent)
+                .setSmallIcon(R.mipmap.ic_launcher);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            return builder.build();
+        } else {
+            return builder.getNotification();
+        }
     }
 
     private void allocateData() {
@@ -184,7 +208,8 @@ public class CollectDataSensorService extends Service implements SensorEventList
 
         // store data
         if (listA.size() == mRecordCount) {
-            writeToFilesTask()
+            writeToFilesTask().subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .doOnCompleted(new Action0() {
                         @Override
                         public void call() {
@@ -205,6 +230,12 @@ public class CollectDataSensorService extends Service implements SensorEventList
                                 Log.e(TAG, "Fail to save file");
                             }
                         }
+                    }, new Action1<Throwable>() {
+                        @Override
+                        public void call(Throwable throwable) {
+                            throwable.printStackTrace();
+                            Log.e(TAG, "Problem writing files");
+                        }
                     });
         }
     }
@@ -213,12 +244,15 @@ public class CollectDataSensorService extends Service implements SensorEventList
         return Observable.create(new Observable.OnSubscribe<Boolean>() {
             @Override
             public void call(Subscriber<? super Boolean> subscriber) {
-                Boolean res = writeFiles();
-                subscriber.onNext(res);
-                subscriber.onCompleted();
+                try {
+                    Boolean res = writeFiles();
+                    subscriber.onNext(res);
+                    subscriber.onCompleted();
+                } catch (Exception ex) {
+                    subscriber.onError(ex);
+                }
             }
-        }).subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread());
+        });
     }
 
     @Override
@@ -240,7 +274,7 @@ public class CollectDataSensorService extends Service implements SensorEventList
         mEventBus.post(collection);
     }
 
-    private boolean writeFiles() {
+    private boolean writeFiles() throws IOException {
         long current = System.currentTimeMillis();
         String name = "SENSOR-DATA "
                 + DateUtils.getCurrentDate(current);
@@ -282,9 +316,6 @@ public class CollectDataSensorService extends Service implements SensorEventList
             }
             Log.e(TAG, "File has been saved at: " + file.getAbsolutePath());
             writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
         } finally {
             // Notify
             notifyEvent(current, file.getName(), listTime.size());

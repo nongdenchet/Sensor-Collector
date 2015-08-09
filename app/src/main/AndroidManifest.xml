@@ -41,17 +41,17 @@
 
         <service android:name=".review_test.MyService" />
 
-        <provider
-            android:name=".collect_data_sensor.database.SensorDataProvider"
-            android:authorities="collect_data_sensor.database.SensorDataProvider"
-            android:exported="false"
-            android:multiprocess="true" />
+        <!--<provider-->
+            <!--android:name=".collect_data_sensor.database.SensorDataProvider"-->
+            <!--android:authorities="collect_data_sensor.database.SensorDataProvider"-->
+            <!--android:exported="false"-->
+            <!--android:multiprocess="true" />-->
 
-        <provider
-            android:name=".collect_data_sensor.database.SensorCollectionProvider"
-            android:authorities="collect_data_sensor.database.SensorCollectionProvider"
-            android:exported="false"
-            android:multiprocess="true" />
+        <!--<provider-->
+            <!--android:name=".collect_data_sensor.database.SensorCollectionProvider"-->
+            <!--android:authorities="collect_data_sensor.database.SensorCollectionProvider"-->
+            <!--android:exported="false"-->
+            <!--android:multiprocess="true" />-->
     </application>
 
 </manifest>

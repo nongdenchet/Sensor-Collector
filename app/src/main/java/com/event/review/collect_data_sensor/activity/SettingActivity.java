@@ -24,4 +24,8 @@ public class SettingActivity extends ActionBarActivity {
                 .commit();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

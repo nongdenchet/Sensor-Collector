@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.view.View;
 
 import com.event.review.R;
 
@@ -18,5 +19,15 @@ public class SettingFragment extends PreferenceFragment {
         prefMgr.setSharedPreferencesName("sensor_preferences");
         prefMgr.setSharedPreferencesMode(Context.MODE_PRIVATE);
         addPreferencesFromResource(R.xml.settings);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

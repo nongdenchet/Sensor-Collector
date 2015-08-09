@@ -13,10 +13,10 @@ import android.view.WindowManager;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.event.review.R;
 import com.event.review.collect_data_sensor.application.SensorApp;
+import com.event.review.collect_data_sensor.common.Navigator;
 import com.event.review.collect_data_sensor.fragment.CollectDataSensorFragment;
 import com.event.review.collect_data_sensor.fragment.SettingFragment;
 import com.event.review.collect_data_sensor.model.SensorData;
-import com.event.review.collect_data_sensor.common.Navigator;
 import com.event.review.collect_data_sensor.service.CollectDataSensorService;
 import com.event.review.collect_data_sensor.util.PrefUtils;
 import com.squareup.otto.Bus;
@@ -95,7 +95,6 @@ public class CollectDataSensorActivity extends AppCompatActivity {
                 } else {
                     startCollect();
                 }
-                start = !start;
                 break;
             case R.id.settings:
                 mNavigator.startSettingActivity(this);
@@ -119,6 +118,7 @@ public class CollectDataSensorActivity extends AppCompatActivity {
                         actionItem.setTitle(getString(R.string.stop));
                         mCollectFragment.getPresenter().allocateData();
                         mNavigator.startCollectDataSensorService(CollectDataSensorActivity.this, text.toString());
+                        start = !start;
                         return true;
                     }
                 })
@@ -138,6 +138,7 @@ public class CollectDataSensorActivity extends AppCompatActivity {
         // stop process and save data
         actionItem.setTitle(getString(R.string.start));
         mNavigator.stopCollectDataSensorService(this);
+        start = !start;
     }
 
     @Override

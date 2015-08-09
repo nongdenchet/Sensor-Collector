@@ -14,6 +14,7 @@ import com.event.review.R;
 import com.event.review.collect_data_sensor.application.SensorApp;
 import com.event.review.collect_data_sensor.fragment.ListSensorDataFragment;
 import com.event.review.collect_data_sensor.model.SensorCollection;
+import com.squareup.leakcanary.RefWatcher;
 import com.squareup.otto.Bus;
 
 import javax.inject.Inject;
